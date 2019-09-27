@@ -12,16 +12,71 @@
       * { box-sizing: border-box; }
 
       iframe {
-        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .gallery {
+        padding: 0px 30px 20px;
+        list-style-type: none;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-column-gap: 20px;
+      }
+
+      .gallery-item {
+        width: 200px;
+        height: 160px;
+      }
+
+      #background {
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        z-index: -1;
+      }
+
+      .hero {
+        height: 300px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hero-img {
+        height: 70%;
       }
     </style>
   </head>
 
   <body>
-    <iframe src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo" frameborder="0" allowfullscreen></iframe>
+    <div class="hero">
+      <img class="hero-img" src="./cooperativa.svg" alt="Coopeartiva's logo" />
+    </div>
+    <ul class="gallery">
+      <li class="gallery-item">
+        <iframe src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo" frameborder="0" allowfullscreen></iframe>
+      </li>
+      <li class="gallery-item">
+        <a href="/soundmachine" style="height: 100%; font-size: 20px; color: black; display: flex; align-items: center; justify-content: center; background: white;">Sound Machine</a>
+      </li>
+    </ul>
+    <div id="background"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
+
+    <script>
+      var pattern = Trianglify({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        cell_size: 250,
+        variance: 1,
+        x_colors: ['#DF3F3F', '#FFB52B', '#DF3F3F', '#24B864', "#EE3030", '#FFFFFF', '#EE3030']
+      });
+      document.getElementById("background").appendChild(pattern.canvas())
+    </script>
   </body>
 </html>
