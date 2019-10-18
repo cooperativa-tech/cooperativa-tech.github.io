@@ -1,6 +1,7 @@
 <html>
   <head>
-    <title>cooperativa</title>
+    <title>Cooperativa Tech</title>
+    <link rel="stylesheet" type="text/css" href="./index.css" />
 
     <style>
       body,
@@ -9,7 +10,9 @@
         margin: 0;
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
       iframe {
         width: 100%;
@@ -27,6 +30,16 @@
       .gallery-item {
         width: 200px;
         height: 160px;
+      }
+
+      .text-only-item {
+        height: 100%;
+        font-size: 20px;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
       }
 
       #background {
@@ -58,10 +71,17 @@
     </div>
     <ul class="gallery">
       <li class="gallery-item">
-        <iframe src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo" frameborder="0" allowfullscreen></iframe>
+        <a href="/jorge_gps.html" class="text-only-item">Jorge GPS</a>
       </li>
       <li class="gallery-item">
-        <a href="/soundmachine" style="height: 100%; font-size: 20px; color: black; display: flex; align-items: center; justify-content: center; background: white;">Sound Machine</a>
+        <a class="text-only-item" href="/soundmachine">Sound Machine</a>
+      </li>
+      <li class="gallery-item">
+        <iframe
+          src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
       </li>
     </ul>
     <div id="background"></div>
@@ -74,9 +94,17 @@
         height: window.innerHeight,
         cell_size: 250,
         variance: 1,
-        x_colors: ['#DF3F3F', '#FFB52B', '#DF3F3F', '#24B864', "#EE3030", '#FFFFFF', '#EE3030']
+        x_colors: [
+          "#DF3F3F",
+          "#FFB52B",
+          "#DF3F3F",
+          "#24B864",
+          "#EE3030",
+          "#FFFFFF",
+          "#EE3030"
+        ]
       });
-      document.getElementById("background").appendChild(pattern.canvas())
+      document.getElementById("background").appendChild(pattern.canvas());
     </script>
   </body>
 </html>
