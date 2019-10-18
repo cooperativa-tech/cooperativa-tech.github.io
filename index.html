@@ -92,17 +92,9 @@
       var pattern = Trianglify({
         width: window.innerWidth,
         height: window.innerHeight,
-        cell_size: 250,
-        variance: 1,
-        x_colors: [
-          "#DF3F3F",
-          "#FFB52B",
-          "#DF3F3F",
-          "#24B864",
-          "#EE3030",
-          "#FFFFFF",
-          "#EE3030"
-        ]
+        cell_size: 30,
+        variance: 7,
+        x_colors: ["#2f3441", "#b8bb9f", "#92bb75", "#45564c", "#20ad6a"]
       });
       document.getElementById("background").appendChild(pattern.canvas());
     </script>
