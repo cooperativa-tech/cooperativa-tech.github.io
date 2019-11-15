@@ -2,15 +2,36 @@
   <head>
     <title>Cooperativa Tech</title>
     <link rel="stylesheet" type="text/css" href="./index.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Exo+2:200,400,700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
+      :root {
+        --max-width: 860px;
+      }
+
       body,
       html {
         height: 100%;
         margin: 0;
+        background-color: black;
+        color: white;
+        font-family: "Exo 2", sans-serif;
+        font-size: 20px;
+        line-height: 1.1;
+        font-weight: 200;
       }
 
-      * {
+      button {
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
 
@@ -19,17 +40,72 @@
         height: 100%;
       }
 
+      .centered {
+        max-width: calc(var(--max-width) + 280px);
+        margin: 0 auto;
+        padding: 0 140px;
+      }
+
+      .lead {
+        margin-bottom: 40px;
+      }
+
       .gallery {
         padding: 0px 30px 20px;
         list-style-type: none;
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-column-gap: 20px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 40px;
+        margin: 0 auto;
       }
 
       .gallery-item {
         width: 200px;
-        height: 160px;
+        height: 240px;
+        background: white;
+        position: relative;
+      }
+
+      .gallery-item-content {
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        position: relative;
+      }
+
+      .gallery-item:nth-child(1) .gallery-item-content,
+      .gallery-item:nth-child(1)::before {
+        background-color: #e18ab3;
+        border-color: #e18ab3;
+      }
+
+      .gallery-item:nth-child(2) .gallery-item-content,
+      .gallery-item:nth-child(2)::before {
+        background-color: #48b9ce;
+        border-color: #48b9ce;
+      }
+
+      .gallery-item::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 30px;
+        left: 20px;
+        z-index: 0;
+        mask: url("./mask.svg") no-repeat 0% 0%;
+        -webkit-mask: url("./mask.svg") no-repeat 0% 0%;
+        mask-size: cover;
+        -webkit-mask-size: contain;
+      }
+
+      .gallery-item-label {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        position: absolute;
+        bottom: -90px;
+        left: -60px;
       }
 
       .text-only-item {
@@ -39,7 +115,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: white;
       }
 
       #background {
@@ -55,48 +130,107 @@
         height: 300px;
         width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        align-items: flex-end;
+        position: relative;
+        margin-bottom: 50px;
+      }
+
+      .hero-title {
+        font-size: 48px;
+        font-weight: 200;
+        margin: 0;
       }
 
       .hero-img {
-        height: 70%;
+        width: 120px;
+        position: absolute;
+        right: 100%;
+        bottom: 0;
+      }
+
+      .link {
+        color: #fe53a3;
+        background: none;
+        border: none;
+        font-size: inherit;
+        padding: 0;
       }
     </style>
   </head>
 
   <body>
-    <div class="hero">
-      <img class="hero-img" src="./cooperativa.svg" alt="Coopeartiva's logo" />
+    <div class="centered">
+      <div class="hero">
+        <img class="hero-img" src="./logo.svg" alt="Coopeartiva's logo" />
+        <h1 class="hero-title">Cooperativa.tech</h1>
+      </div>
+      <p class="lead">
+        We’re a group of tech professionals who gather to build cool, exciting
+        stuff.
+      </p>
+      <p class="lead">
+        <button class="link" onclick="queresFazTu()">
+          Perhaps you have an awesome idea to share?
+        </button>
+      </p>
+      <ul class="gallery">
+        <li class="gallery-item">
+          <a href="/jorge_gps.html" class="gallery-item-content text-only-item"
+            ><div class="gallery-item-label">Jorge GPS</div></a
+          >
+        </li>
+        <li class="gallery-item">
+          <a class="gallery-item-content text-only-item" href="/soundmachine"
+            ><div class="gallery-item-label">Sound Machine</div></a
+          >
+        </li>
+        <li class="gallery-item">
+          <div class="gallery-item-content">
+            <iframe
+              src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </li>
+      </ul>
     </div>
-    <ul class="gallery">
-      <li class="gallery-item">
-        <a href="/jorge_gps.html" class="text-only-item">Jorge GPS</a>
-      </li>
-      <li class="gallery-item">
-        <a class="text-only-item" href="/soundmachine">Sound Machine</a>
-      </li>
-      <li class="gallery-item">
-        <iframe
-          src="https://www.youtube.com/embed/l7qs_nfLMSc?t=18s&controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=Ssat5jtXHoo"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-      </li>
-    </ul>
-    <div id="background"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
 
     <script>
-      var pattern = Trianglify({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        cell_size: 30,
-        variance: 7,
-        x_colors: ["#2f3441", "#b8bb9f", "#92bb75", "#45564c", "#20ad6a"]
-      });
-      document.getElementById("background").appendChild(pattern.canvas());
+      function queresFazTu() {
+        alert("QUERES FAZ TU!");
+      }
+    </script>
+    <script>
+      const maxOpacity = 0.6;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      let x;
+      let y;
+      let number;
+      let currentOpacity;
+
+      canvas.width = window.innerWidth / 2;
+      canvas.height = 800;
+
+      for (x = 0; x < canvas.width; x += 1) {
+        for (y = 0; y < canvas.height; y += 1) {
+          if (Math.random() * 10 < 9.2) continue;
+
+          number = Math.floor(Math.random() * 100) + 150;
+
+          currentOpacity = ((canvas.height - y) / canvas.height) * maxOpacity;
+
+          ctx.fillStyle = `rgba(${number},${number},255,${currentOpacity})`;
+
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+
+      document.body.style.backgroundImage =
+        "url(" + canvas.toDataURL("image/png") + ")";
+
+      document.body.style.backgroundRepeat = "repeat-x";
     </script>
   </body>
 </html>
