@@ -6,159 +6,19 @@
       href="https://fonts.googleapis.com/css?family=Exo+2:200,400,700&display=swap"
       rel="stylesheet"
     />
-
-    <style>
-      :root {
-        --max-width: 860px;
-      }
-
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        background-color: black;
-        color: white;
-        font-family: "Exo 2", sans-serif;
-        font-size: 20px;
-        line-height: 1.1;
-        font-weight: 200;
-      }
-
-      button {
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      iframe {
-        width: 100%;
-        height: 100%;
-      }
-
-      .centered {
-        max-width: calc(var(--max-width) + 280px);
-        margin: 0 auto;
-        padding: 0 140px;
-      }
-
-      .lead {
-        margin-bottom: 40px;
-      }
-
-      .gallery {
-        padding: 0px 30px 20px;
-        list-style-type: none;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-column-gap: 40px;
-        margin: 0 auto;
-      }
-
-      .gallery-item {
-        width: 200px;
-        height: 240px;
-        background: white;
-        position: relative;
-      }
-
-      .gallery-item-content {
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        position: relative;
-      }
-
-      .gallery-item:nth-child(1) .gallery-item-content,
-      .gallery-item:nth-child(1)::before {
-        background-color: #e18ab3;
-        border-color: #e18ab3;
-      }
-
-      .gallery-item:nth-child(2) .gallery-item-content,
-      .gallery-item:nth-child(2)::before {
-        background-color: #48b9ce;
-        border-color: #48b9ce;
-      }
-
-      .gallery-item::before {
-        content: "";
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 30px;
-        left: 20px;
-        z-index: 0;
-        mask: url("./mask.svg") no-repeat 0% 0%;
-        -webkit-mask: url("./mask.svg") no-repeat 0% 0%;
-        mask-size: cover;
-        -webkit-mask-size: contain;
-      }
-
-      .gallery-item-label {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        position: absolute;
-        bottom: -90px;
-        left: -60px;
-      }
-
-      .text-only-item {
-        height: 100%;
-        font-size: 20px;
-        color: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      #background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-      }
-
-      .hero {
-        height: 300px;
-        width: 100%;
-        display: flex;
-        align-items: flex-end;
-        position: relative;
-        margin-bottom: 50px;
-      }
-
-      .hero-title {
-        font-size: 48px;
-        font-weight: 200;
-        margin: 0;
-      }
-
-      .hero-img {
-        width: 120px;
-        position: absolute;
-        right: 100%;
-        bottom: 0;
-      }
-
-      .link {
-        color: #fe53a3;
-        background: none;
-        border: none;
-        font-size: inherit;
-        padding: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="index.css" />
   </head>
 
   <body>
+    <object
+      id="alien-ship"
+      class="alien-ship"
+      data="./alien_ship.svg"
+      type="image/svg+xml"
+    >
+      <img src="./alien_ship.svg" />
+    </object>
+    <canvas id="background-noise"></canvas>
     <div class="centered">
       <div class="hero">
         <img class="hero-img" src="./logo.svg" alt="Coopeartiva's logo" />
@@ -202,35 +62,87 @@
       }
     </script>
     <script>
+      window.addEventListener("load", function() {
+        let timer;
+        const $ship = document.getElementById("alien-ship");
+
+        $ship.style.top =
+          document.getElementsByClassName("gallery-item")[0].offsetTop -
+          50 +
+          "px";
+
+        setTimeout(() => {
+          $ship.style.transition = "all 2s ease-in-out";
+          Array.from(document.getElementsByClassName("gallery-item")).map(
+            $item => {
+              $item.addEventListener("mouseenter", event =>
+                hoverShip(event.target)
+              );
+
+              $item.addEventListener("mouseleave", event => {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(() => {
+                  $ship.style.transform = null;
+                }, 5000);
+              });
+            }
+          );
+
+          function hoverShip($el) {
+            if (timer) clearTimeout(timer);
+            const rect = $el.getBoundingClientRect();
+            $ship.style.transform = `translate(${rect.left + 220}px)`;
+          }
+        }, 100);
+      });
+    </script>
+    <script>
       const maxOpacity = 0.6;
-      const canvas = document.createElement("canvas");
+      const canvas = document.getElementById("background-noise");
       const ctx = canvas.getContext("2d");
       let x;
       let y;
       let number;
       let currentOpacity;
 
-      canvas.width = window.innerWidth / 2;
+      canvas.width = window.innerWidth;
       canvas.height = 800;
 
-      for (x = 0; x < canvas.width; x += 1) {
+      const state = new Array(canvas.width);
+
+      for (x = 0; x < canvas.width; x++) {
+        state[x] = new Array(canvas.height);
+
         for (y = 0; y < canvas.height; y += 1) {
-          if (Math.random() * 10 < 9.2) continue;
-
-          number = Math.floor(Math.random() * 100) + 150;
-
-          currentOpacity = ((canvas.height - y) / canvas.height) * maxOpacity;
-
-          ctx.fillStyle = `rgba(${number},${number},255,${currentOpacity})`;
-
-          ctx.fillRect(x, y, 1, 1);
+          if (Math.random() * 10 < 9.2) {
+            state[x][y] = false;
+          } else {
+            number = Math.floor(Math.random() * 100) + 150;
+            currentOpacity = ((canvas.height - y) / canvas.height) * maxOpacity;
+            state[x][y] = `rgba(${number},${number},255,${currentOpacity})`;
+          }
         }
       }
 
-      document.body.style.backgroundImage =
-        "url(" + canvas.toDataURL("image/png") + ")";
+      function redraw() {
+        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.fillRect(x, y, canvas.width, canvas.height);
 
-      document.body.style.backgroundRepeat = "repeat-x";
+        for (x = 0; x < canvas.width; x += 1) {
+          for (y = 0; y < canvas.height; y += 1) {
+            if (state[x][y]) {
+              ctx.fillStyle = state[x][y];
+              ctx.fillRect(x, y, 1, 1);
+            }
+          }
+        }
+      }
+
+      window.requestAnimationFrame(redraw);
+
+      canvas.style.position = "fixed";
+      canvas.style.top = 0;
+      canvas.style.left = 0;
     </script>
   </body>
 </html>
