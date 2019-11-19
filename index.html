@@ -144,9 +144,10 @@
       window.addEventListener("load", function() {
         const $ship = document.getElementById("alien-ship");
         const $shipLight = $ship.querySelector(".ship-light");
+
         let timer;
-        let lightsTimer;
         let moveTimer;
+        let currentTarget;
 
         $ship.style.transition = "all 2s ease-in-out";
         $ship.style.top =
@@ -172,7 +173,6 @@
 
         function hideShip() {
           clearTimeout(moveTimer);
-          clearTimeout(lightsTimer);
           $ship.querySelector(".ship-light").classList.add("invisible");
           moveTimer = setTimeout(() => {
             $ship.style.transform = null;
@@ -180,34 +180,39 @@
         }
 
         async function hoverShip($el) {
-          clearTimeout(lightsTimer);
+          if ($el === currentTarget) return;
+
+          clearTimeout(moveTimer);
 
           const rect = $el.getBoundingClientRect();
+          currentTarget = $el;
 
           if (!$shipLight.classList.contains("invisible")) {
             $shipLight.classList.add("invisible");
-            setTimeout(() => {
-              moveShip(rect.left);
-              lightsTimer = setTimeout(() => {
-                hideLights();
-              }, 2100);
+            moveTimer = setTimeout(() => {
+              moveShip($el);
             }, 500);
           } else {
-            moveShip(rect.left);
-            lightsTimer = setTimeout(() => {
-              hideLights();
-            }, 2100);
+            moveShip($el);
           }
         }
 
-        function moveShip(left) {
-          clearTimeout(moveTimer);
+        function moveShip($el) {
+          const rect = $el.getBoundingClientRect();
+
           moveTimer = setTimeout(() => {
-            $ship.style.transform = `translate(${left + 220}px)`;
+            moveShipToPosition(rect.left);
+            moveTimer = setTimeout(() => {
+              hideShipLights();
+            }, 2000);
           }, 100);
         }
 
-        function hideLights() {
+        function moveShipToPosition(leftPosition) {
+          $ship.style.transform = `translate(${leftPosition + 220}px)`;
+        }
+
+        function hideShipLights() {
           $shipLight.classList.remove("invisible");
         }
       });
