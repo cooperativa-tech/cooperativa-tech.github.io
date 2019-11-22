@@ -43,7 +43,7 @@
       position: absolute;
       bottom: -90px;
       left: -40px;
-    }</style><li class="gallery-item"><div class="gallery-item-border"></div><a class="gallery-item-content" href="/soundmachine"><div class="gallery-item-label"><slot name="label"></slot></div></a></li></template><script>class GalleryItem extends HTMLElement {
+    }</style><li class="gallery-item"><div class="gallery-item-border"></div><a class="gallery-item-content" href="#"><div class="gallery-item-label"></div></a></li></template><script>class GalleryItem extends HTMLElement {
     constructor() {
       super();
       const template = document.getElementById("gallery_item");
@@ -74,6 +74,10 @@
     connectedCallback() {
       const $content = this.shadowRoot.querySelector(".gallery-item-content");
 
+      $content.setAttribute('href', this.getAttribute('href'));
+
+      this.shadowRoot.querySelector('.gallery-item-label').innerText = this.getAttribute('label');
+
       if (this.hasAttribute("color")) {
         const color = this.getAttribute("color").replace('"', "");
 
@@ -92,7 +96,7 @@
     }
   }
 
-  customElements.define("gallery-item", GalleryItem);</script><canvas id="background-noise"></canvas><div class="centered"><div class="hero"><img class="hero-img" src="./images/logo.svg" alt="Coopeartiva's logo"><h1 class="hero-title">Cooperativa.tech</h1></div><p class="lead">We’re a group of tech professionals who gather to build cool, exciting stuff.</p><p class="lead"><button class="link" onclick="queresFazTu()">Perhaps you have an awesome idea to share?</button></p><ul class="gallery"><gallery-item color="#E18AB3" img-visible="false" img="./images/jorge.png"></gallery-item><gallery-item color="#48b9ce" img-visible="false" img="./images/jorge.png"></gallery-item></ul></div><script>function queresFazTu() {
+  customElements.define("gallery-item", GalleryItem);</script><canvas id="background-noise"></canvas><div class="centered"><div class="hero"><img class="hero-img" src="./images/logo.svg" alt="Coopeartiva's logo"><h1 class="hero-title">Cooperativa.tech</h1></div><p class="lead">We’re a group of tech professionals who gather to build cool, exciting stuff.</p><p class="lead"><button class="link" onclick="queresFazTu()">Perhaps you have an awesome idea to share?</button></p><ul class="gallery"><gallery-item label="Jorge GPS" href="/jorge_gps" color="#E18AB3" img-visible="false" img="./images/jorge.png"></gallery-item><gallery-item label="Sound Machine" href="/soundmachine" color="#48b9ce" img-visible="false" img="./images/jorge.png"></gallery-item></ul></div><script>function queresFazTu() {
         alert("QUERES FAZ TU!");
       }</script><script>window.addEventListener("load", function () {
         const $ship = document.getElementById("alien-ship");
@@ -111,13 +115,13 @@
           .from(document.getElementsByTagName("gallery-item"))
           .map($item => {
             $item.addEventListener("mouseenter", event => {
-              if (timer) 
+              if (timer)
                 clearTimeout(timer);
               hoverShip(event.target);
             });
 
             $item.addEventListener("mouseleave", event => {
-              if (timer) 
+              if (timer)
                 clearTimeout(timer);
               timer = setTimeout(() => {
                 hideShip();
@@ -137,9 +141,9 @@
         }
 
         async function hoverShip($el) {
-          if ($el === currentTarget) 
+          if ($el === currentTarget)
             return;
-          
+
           clearTimeout(moveTimer);
 
           const rect = $el.getBoundingClientRect();
