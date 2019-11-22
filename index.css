@@ -62,6 +62,10 @@ iframe {
   height: 100%;
   z-index: 2;
   position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: difference;
 }
 
 .gallery-item:nth-child(1) .gallery-item-content,
@@ -84,8 +88,8 @@ iframe {
   top: 30px;
   left: 20px;
   z-index: 0;
-  mask: url("./mask.svg") no-repeat 0% 0%;
-  -webkit-mask: url("./mask.svg") no-repeat 0% 0%;
+  mask: url("./images/mask.svg") no-repeat 0% 0%;
+  -webkit-mask: url("./images/mask.svg") no-repeat 0% 0%;
   mask-size: cover;
   -webkit-mask-size: contain;
 }

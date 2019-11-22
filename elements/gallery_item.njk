@@ -1,0 +1,112 @@
+<template id="gallery_item">
+  <style>
+    *,
+    *::after,
+    *::before {
+      box-sizing: border-box;
+    }
+
+    .gallery-item {
+      width: 200px;
+      height: 240px;
+      background: white;
+      position: relative;
+    }
+
+    .gallery-item-content {
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      position: relative;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-blend-mode: difference;
+      display: block;
+    }
+
+    .gallery-item-border {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      z-index: 0;
+      mask: url("./images/mask.svg") no-repeat 0 0;
+      -webkit-mask: url("./images/mask.svg") no-repeat 0 0;
+      mask-size: cover;
+      -webkit-mask-size: contain;
+    }
+
+    .gallery-item-label {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: absolute;
+      bottom: -90px;
+      left: -40px;
+    }
+  </style>
+
+  <li class="gallery-item">
+    <div class="gallery-item-border"></div>
+    <a class="gallery-item-content" href="/soundmachine">
+      <div class="gallery-item-label">
+        <slot name="label"></slot>
+      </div>
+    </a>
+  </li>
+</template>
+
+<script>
+  class GalleryItem extends HTMLElement {
+    constructor() {
+      super();
+      const template = document.getElementById("gallery_item");
+      const templateContent = template.content;
+      const shadow = this.attachShadow({ mode: "open" }).appendChild(
+        templateContent.cloneNode(true)
+      );
+    }
+
+    static get observedAttributes() {
+      return ["img-visible"];
+    }
+
+    updateImage() {
+      if (!this.hasAttribute("img") || !this.hasAttribute("img-visible"))
+        return;
+
+      const $content = this.shadowRoot.querySelector(".gallery-item-content");
+
+      if (this.getAttribute("img-visible") !== "true") {
+        $content.style["background-image"] = "";
+      } else {
+        const imgUrl = this.getAttribute("img");
+        $content.style["background-image"] = `url(${imgUrl})`.replace('"', "");
+      }
+    }
+
+    connectedCallback() {
+      const $content = this.shadowRoot.querySelector(".gallery-item-content");
+
+      if (this.hasAttribute("color")) {
+        const color = this.getAttribute("color").replace('"', "");
+
+        $content.style["background-color"] = color;
+
+        this.shadowRoot.querySelector(
+          ".gallery-item-border"
+        ).style = `background-color: ${color};border-color: ${color}`;
+      }
+
+      this.updateImage();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name === "img-visible") this.updateImage();
+    }
+  }
+
+  customElements.define("gallery-item", GalleryItem);
+</script>

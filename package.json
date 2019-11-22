@@ -1,0 +1,25 @@
+{
+  "name": "cooperativa-tech",
+  "version": "1.0.0",
+  "description": "Run `npx serve .`, edit the files, save, commit and push. That's it.",
+  "main": "components.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cooperativa-tech/cooperativa-tech.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cooperativa-tech/cooperativa-tech.github.io/issues"
+  },
+  "homepage": "https://github.com/cooperativa-tech/cooperativa-tech.github.io#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^0.9.0",
+    "clean-css": "^4.2.1",
+    "html-minifier": "^4.0.0"
+  }
+}
