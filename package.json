@@ -4,6 +4,7 @@
   "description": "Run `npx serve .`, edit the files, save, commit and push. That's it.",
   "main": "components.js",
   "scripts": {
+    "start": "eleventy --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

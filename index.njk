@@ -30,8 +30,8 @@
         </button>
       </p>
       <ul class="gallery">
-        <gallery-item color="#E18AB3" img-visible="false" img="./images/jorge.png"></gallery-item>
-        <gallery-item color="#48b9ce" img-visible="false" img="./images/jorge.png"></gallery-item>
+        <gallery-item label="Jorge GPS" href="/jorge_gps" color="#E18AB3" img-visible="false" img="./images/jorge.png"></gallery-item>
+        <gallery-item label="Sound Machine" href="/soundmachine" color="#48b9ce" img-visible="false" img="./images/jorge.png"></gallery-item>
       </ul>
     </div>
 
@@ -58,13 +58,13 @@
           .from(document.getElementsByTagName("gallery-item"))
           .map($item => {
             $item.addEventListener("mouseenter", event => {
-              if (timer) 
+              if (timer)
                 clearTimeout(timer);
               hoverShip(event.target);
             });
 
             $item.addEventListener("mouseleave", event => {
-              if (timer) 
+              if (timer)
                 clearTimeout(timer);
               timer = setTimeout(() => {
                 hideShip();
@@ -84,9 +84,9 @@
         }
 
         async function hoverShip($el) {
-          if ($el === currentTarget) 
+          if ($el === currentTarget)
             return;
-          
+
           clearTimeout(moveTimer);
 
           const rect = $el.getBoundingClientRect();

@@ -50,10 +50,8 @@
 
   <li class="gallery-item">
     <div class="gallery-item-border"></div>
-    <a class="gallery-item-content" href="/soundmachine">
-      <div class="gallery-item-label">
-        <slot name="label"></slot>
-      </div>
+    <a class="gallery-item-content" href="#">
+      <div class="gallery-item-label"></div>
     </a>
   </li>
 </template>
@@ -89,6 +87,10 @@
 
     connectedCallback() {
       const $content = this.shadowRoot.querySelector(".gallery-item-content");
+
+      $content.setAttribute('href', this.getAttribute('href'));
+
+      this.shadowRoot.querySelector('.gallery-item-label').innerText = this.getAttribute('label');
 
       if (this.hasAttribute("color")) {
         const color = this.getAttribute("color").replace('"', "");
