@@ -1,21 +1,23 @@
-name: Eleventy Build
+name: Build
 on: [push]
 
 jobs:
   build_deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
           node-version: "10"
       - run: npm install
-      - name: Build
-        uses: TartanLlama/actions-eleventy@v1.1
+      - name: Build Gatsby Site
+        uses: jzweifel/gatsby-cli-github-action@master
+        with:
+          gatsby-arg: build
       - name: Deploy
         uses: docker://peaceiris/gh-pages:v2.5.0
         env:
-          PUBLISH_DIR: _site
+          PUBLISH_DIR: public
           PUBLISH_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
