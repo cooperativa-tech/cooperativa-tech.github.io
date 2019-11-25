@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "gatsby-link"
 
 import "./GalleryItem.css"
 
@@ -10,18 +9,18 @@ export default function GalleryItem(props) {
         className="gallery-item-border"
         style={{ backgroundColor: props.color, borderColor: props.color }}
       ></div>
-      <Link
+      <a
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
         className="gallery-item-content"
-        to={props.href}
+        href={props.href}
         style={{
           backgroundColor: props.color,
           backgroundImage: props.imgVisible ? `url(${props.img})` : "",
         }}
       >
         <div className="gallery-item-label">{props.label}</div>
-      </Link>
+      </a>
     </li>
   )
 }

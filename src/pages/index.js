@@ -24,7 +24,7 @@ const galleryItems = [
   {
     key: 2,
     label: "Sound Machine",
-    href: "/soundmachine",
+    href: "/soundmachine/",
     color: "#48b9ce",
     img: imgJorge,
   },
@@ -43,7 +43,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (!galleryRef.current) return
-    setState(current => ({ shipReady: false }))
+    setState(current => ({ ...current, shipReady: false }))
 
     setTimeout(() => {
       setState(current => ({ ...current, shipReady: true }))
